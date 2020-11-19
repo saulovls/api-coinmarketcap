@@ -1,7 +1,7 @@
-#### ✨ Página de login do Instagram :
+#### ✨ Requisitando dados da API do CoinMarketCap:
 
 - Estrutura em HTML5;
-- Javascript incorporado no corpo HTML;
+- Javascript incorporado no HTML;
 - Estilização com o Framework Materialize CSS;
 
 #### 🚧 Considerações adicionais para esse miniprojeto:
