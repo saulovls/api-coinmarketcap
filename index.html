@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>API - CoinMarketCap</title>
+  <!-- Compiled and minified CSS -->
+  <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <meta charset="utf-8" />
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-wrapper" style="background-color: #26a69a;">
+      <a href="#!" class="brand-logo">&nbsp Requisição da CoinMarketCap API</a>
+      <ul class="right hide-on-med-and-down">
+        <li>
+          <a href="https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc/related"
+            target="_blank"><i class="material-icons left">cloud_download</i>Instalar extensão</a>
+        </li>
+        <li>
+          <a href="https://coinmarketcap.com/api/documentation/v1/" target="_blank"><i
+              class="material-icons left">menu_book</i>Documentação da API</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="col s12 m12 l12">
+      <div class="card horizontal">
+        <div class="card-stacked">
+          <div class="card-content">
+            <ul id="result" class="collection">
+              <div class="progress">
+                <div class="indeterminate"></div>
+              </div>
+            </ul>
+            <p>
+              Desenvolvido por
+              <a href="https://github.com/vicelao" target="_blank">Saulo Lessa</a>.
+              Você precisa da extensão <strong><a
+                  href="https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc/related"
+                  target="_blank">Moesif Origin & CORS Changer</a></strong>
+              para conseguir visualizar as informações. Se ainda estiver com
+              dúvidas, veja os links do menu.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    //API Key, disponível no site: https://coinmarketcap.com/api/documentation/v1/#section/Quick-Start-Guide
+    const info = {
+      key: 'fa4cffb2-c73b-4076-816a-1ec3073597b6',
+      search: 'https://www.google.com/search?sxsrf=ALeKk02MOQRZhDbTLtq5qrdKI6n5CZcnHQ%3A1605814503789&source=hp&ei=58i2X9vgLfi_5OUPkp-16A0&q='
+    };
+
+    //GET Fetch Requisition
+    fetch(
+      'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?CMC_PRO_API_KEY=' +
+      info.key
+    )
+      .then((response) => {
+        if (!response.ok)
+          throw new Error(
+            'Erro ao executar a requisição, status ' + response.status
+          );
+        return response.json();
+      }).then((api) => {
+        console.log(api)
+        let texto = '';
+        for (let i = 0; i < 10; i++) {
+
+          texto =
+            texto +
+            `   <li class="collection-item avatar">
+                 <i class="material-icons circle green">attach_money</i>
+                 <span class="title">Moeda: <strong>${api.data[i].name}</strong></span>
+                 <p>
+                   Abreviação: <strong>${api.data[i].symbol} </strong><br />
+                   Posição no rank: <strong>${api.data[i].rank}º</strong>
+                 </p>
+                 <a href="${info.search + api.data[i].name}"
+                   class="secondary-content btn waves-effect waves-light" target="_blank">
+                   <i class="material-icons left">search</i>
+                   Ver no Google
+                 </a>
+               </li>     `;
+          document.getElementById('result').innerHTML = texto;
+
+        }
+      }).catch((error) => {
+        console.error(error.message);
+
+      });
+  </script>
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
